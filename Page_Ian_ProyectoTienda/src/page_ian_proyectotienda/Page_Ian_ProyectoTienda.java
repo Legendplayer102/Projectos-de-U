@@ -98,47 +98,117 @@ public class Page_Ian_ProyectoTienda {
            
            }
            
-           if (opcion == 2){
+           if (opcion == 2){ //Ventas
                if (!cajaAbierta || !diaActivo){
                    System.out.println("La caja esta cerada o el dia esta cerrado");
                }
-           }
            
-           // Variables para le siguiente venta
            
-           double subtotalVenta = 0;
-           boolean continuarVenta = true;
-           
-           while (continuarVenta){
-               System.out.println("Ingrese tipo de cliente (A,B,C): ");
-               String tipoCliente = scanner.next().toUpperCase(); //por si el usuario escribe en minuscula
-               
-               if (!tipoCliente.equals("A") && !tipoCliente.equals("B") && !tipoCliente.equals("C")){
-                   System.out.println("Tipo de cliente invalido.");
-               }
-           }
-           
-           //Los Productos disponibles
-           
-           System.out.println("\nProductos disponibles:");
-           System.out.println("1. "+ productoAzucar + " - Lps" + precioAzucar + "/kg");
-           System.out.println("1. "+ productoAvena + " - Lps" + precioAzucar + "/kg");
-           System.out.println("1. "+ productoTrigo + " - Lps" + precioAzucar + "/kg");
-           System.out.println("1. "+ productoMaiz + " - Lps" + precioAzucar + "/kg");
-           
-           //Pedir el codigo del producto
-           
-           System.out.println("Ingrese el codigo del producto a vender: ");
-           
-           int codigoProducto = scanner.nextInt();
-           
-           //verificar el producto y el tipo de cliente
-           
-           boolean productoValido = false;
-           String nombreProducto = "";
-           double precioProducto = 0;
-           
-          
+                // Variables para le siguiente venta
+
+                double subtotalVenta = 0;
+                boolean continuarVenta = true;
+
+                while (continuarVenta){
+                    System.out.println("Ingrese tipo de cliente (A,B,C): ");
+                    String tipoCliente = scanner.next().toUpperCase(); //por si el usuario escribe en minuscula
+
+                    if (!tipoCliente.equals("A") && !tipoCliente.equals("B") && !tipoCliente.equals("C")){
+                        System.out.println("Tipo de cliente invalido.");
+                    } else {
+
+
+
+                     //Los Productos disponibles
+
+                     System.out.println("\nProductos disponibles:");
+                     System.out.println("1. "+ productoAzucar + " - Lps" + precioAzucar + "/kg");
+                     System.out.println("1. "+ productoAvena + " - Lps" + precioAvena + "/kg");
+                     System.out.println("1. "+ productoTrigo + " - Lps" + precioTrigo + "/kg");
+                     System.out.println("1. "+ productoMaiz + " - Lps" + precioMaiz + "/kg");
+
+                        //Pedir el codigo del producto
+
+                        System.out.println("Ingrese el codigo del producto a vender: ");
+                        int codigoProducto = scanner.nextInt();
+
+                        //verificar el producto y el tipo de cliente
+
+                        boolean productoValido = false;
+                        String nombreProducto = "";
+                        double precioProducto = 0;
+
+                       if (codigoProducto == 1){     //Azucar
+                           if(tipoCliente.equals("A") || tipoCliente.equals("B")){
+                               productoValido = true;
+                               nombreProducto = productoAzucar;
+                               precioProducto = precioAzucar;
+                           }
+                       } else if (codigoProducto == 2){
+                           if(tipoCliente.equals("A") || tipoCliente.equals("B")){
+                               productoValido = true;
+                               nombreProducto = productoAvena;
+                               precioProducto = precioAvena;
+                            }  
+                       } else if (codigoProducto == 3){
+                           if(tipoCliente.equals("A") || tipoCliente.equals("B")){
+                               productoValido = true;
+                               nombreProducto = productoTrigo;
+                               precioProducto = precioTrigo;
+                            }
+                       } else if (codigoProducto == 4){
+                           if(tipoCliente.equals("A") || tipoCliente.equals("C")){
+                               productoValido = true;
+                               nombreProducto = productoMaiz;
+                               precioProducto = precioMaiz;
+                           }
+                       } else {
+                           System.out.println("Codigo de producto no valido.");
+                       }
+                       if (!productoValido){
+                           System.out.println("Este cliente No puede comprar dicho producto.");
+                       } else {
+                           //Cantidad de kg
+                           System.out.println("Ingrese la cantidad de kilogramos a vender: ");
+                           double kg = scanner.nextDouble();
+                           
+                           if (kg > 0){
+                               double monto = kg * precioProducto;
+                               subtotalVenta += monto;
+                               
+                               //Actualizar productos vendidos
+                               
+                              if (codigoProducto == 1){
+                                  ventasAzucar += kg;
+                              } else if (codigoProducto == 2){
+                                  ventasAvena += kg;
+                              } else if (codigoProducto == 3){
+                                  ventasTrigo += kg;
+                              } else if (codigoProducto == 4){
+                                  ventasMaiz += kg;
+                              }
+                              System.out.println("Vendido: " + kg + "kg de" + nombreProducto + monto);
+                              
+                           } else {
+                               System.out.println("Cantidad no valida.");
+                           }
+                           
+                       }
+                       //Preguntar si desea comprar otro producto
+                        System.out.println("Desea comprar otro producto? (S/N): ");
+                        String respuesta = scanner.next().toUpperCase();
+                        if (!respuesta.equals("S")){
+                            continuarVenta = false;
+                        }
+                    }
+                }
+                       
+                       
+                       
+                       
+                               
+            }
+          }
            
            
            
@@ -151,6 +221,4 @@ public class Page_Ian_ProyectoTienda {
        
        
        
-    }
-    
 }
